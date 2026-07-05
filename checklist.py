@@ -88,8 +88,10 @@ class TelaWiFi(TelaFrame):
     
     def __init__(self, master):
         super().__init__(master, "WiFi")
-        mostrarWiFi = tk.Label(self, text=self.obterWiFi())
-        mostrarWiFi.pack()
+        WiFis = self.obterWiFi()
+        for wifi in WiFis: 
+            mostrarWiFi = tk.Label(self, text=wifi)
+            mostrarWiFi.pack()
 
 class TelaBluetooth(TelaFrame):
     def __init__(self, master):
