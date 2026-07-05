@@ -36,7 +36,12 @@ class TelaHardware(TelaFrame):
             return(obterCPU.stdout)
     def obterRAM(self):
             obterRAM = subprocess.run("sudo dmidecode -t memory | grep -i size", capture_output=True, text=True, shell=True)
-            return(obterRAM.stdout)
+            somaRAM = 0
+            for pente in obterRAM.stdout.splitlines():
+                strRAM = pente.split()[1].replace("GB", "")
+                strRAM = int(strRAM)
+                somaRAM = somaRAM+strRAM
+            return(somaRAM)
     def __init__(self, master):
         super().__init__(master, "Hardware")
         mostrarCPU = tk.Label(self, text=self.obterCPU())
