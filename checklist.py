@@ -77,8 +77,10 @@ class TelaHardware(TelaFrame):
         mostrarCPU.pack()
         mostrarRAM = tk.Label(self, text=self.obterRAM())
         mostrarRAM.pack()
-        mostrarDisco = tk.Label(self, text=self.obterDisco())
-        mostrarDisco.pack()
+        discos = self.obterDisco()
+        for disco in discos:
+            mostrarDisco = tk.Label(self, text=disco)
+            mostrarDisco.pack()
 
 class TelaWiFi(TelaFrame):
     def __init__(self, master):
