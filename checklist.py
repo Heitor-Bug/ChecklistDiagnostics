@@ -82,9 +82,9 @@ class TelaHardware(TelaFrame):
             mostrarDisco.pack()
 
 class TelaWiFi(TelaFrame):
-    def obterWiFi():
+    def obterWiFi(self):
         obterWiFi = subprocess.run("nmcli device wifi list", capture_output=True, text=True, shell=True)
-        return(obterWiFi)
+        return(obterWiFi.stdout)
     
     def __init__(self, master):
         super().__init__(master, "WiFi")
