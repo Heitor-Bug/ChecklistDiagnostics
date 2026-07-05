@@ -18,6 +18,7 @@ Telas = [
 ]
 pagina = 0
 
+
 class TelaFrame(tk.Frame):
     def __init__(self, master, titulotext):
         super().__init__(master)
@@ -30,10 +31,12 @@ class TelaFrame(tk.Frame):
         botVoltar = tk.Button(rodape, text="Voltar", command=lambda: mudarPagina(-1))
         botVoltar.pack(side="left")
 
+
 class TelaHardware(TelaFrame):
     def obterCPU(self):
         obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
         return(obterCPU.stdout)
+
     def obterRAM(self):
         obterRAM = subprocess.run("sudo dmidecode -t memory | grep -i size", capture_output=True, text=True, shell=True)
         somaRAM = 0
@@ -42,9 +45,22 @@ class TelaHardware(TelaFrame):
             strRAM = int(strRAM)
             somaRAM = somaRAM+strRAM
         return(f"Memoria RAM: {somaRAM}GB")
+
     def obterDisco(self):
         obterDisco = subprocess.run("sudo fdisk -l | grep 'Disk /dev/sd' | grep -v 'Disklabel'", capture_output=True, text=True, shell=True)
-        return(obterDisco.stdout)
+        Discos = []
+        for hd in obterDisco.stdout.splitlines():
+            strDisco = hd.split()[4]
+            strDisco = int(strDisco)
+            if strDisco>=1000000000000:
+                strDisco = strDisco / 1000000000000
+                strDisco = f"Disco HD/SSD: {strDisco}TB"
+            else:
+                strDisco = strDisco / 1000000000
+                strDisco = f"Disco HD/SSD: {strDisco}GB"
+            Discos = Discos + [strDisco]
+        return(Discos)
+
     def __init__(self, master):
         super().__init__(master, "Hardware")
         mostrarCPU = tk.Label(self, text=self.obterCPU())
