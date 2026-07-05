@@ -47,9 +47,11 @@ class TelaFrame(tk.Frame):
 class TelaFrameTeste(TelaFrame):
     def __init__(self, master, titulotext):
         super().__init__(master, titulotext)
-        botOk = tk.Button(self, text="Okay")
+        frameok = tk.Frame(self)
+        frameok.pack(side="bottom", fill="x")
+        botOk = tk.Button(frameok, text="Okay")
         botOk.pack(side="right")
-        botNaoFunciona = tk.Button(self, text="Não Funciona")
+        botNaoFunciona = tk.Button(frameok, text="Não Funciona")
         botNaoFunciona.pack(side="left")
 
 
