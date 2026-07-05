@@ -41,7 +41,7 @@ class TelaHardware(TelaFrame):
                 strRAM = pente.split()[1].replace("GB", "")
                 strRAM = int(strRAM)
                 somaRAM = somaRAM+strRAM
-            return(somaRAM)
+            return(f"Memoria RAM: {somaRAM}GB")
     def __init__(self, master):
         super().__init__(master, "Hardware")
         mostrarCPU = tk.Label(self, text=self.obterCPU())
