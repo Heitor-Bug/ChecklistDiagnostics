@@ -23,7 +23,6 @@ class TelaFrame(tk.Frame):
         super().__init__(master)
         titulo = tk.Label(self, text=titulotext)
         titulo.pack(side="top")
-        
         rodape = tk.Frame(self)
         rodape.pack(side="bottom", fill="x")
         botProximo = tk.Button(rodape, text="Próximo", command=lambda: mudarPagina(1))
@@ -37,7 +36,9 @@ class TelaHardware(TelaFrame):
             return(obterCPU.stdout)
     def __init__(self, master):
         super().__init__(master, "Hardware")
-        print(self.obterCPU())
+        mostrarCPU = tk.Label(self, text=self.obterCPU())
+        mostrarCPU.pack()
+        #print(self.obterCPU())
 
 
 class TelaWiFi(TelaFrame):
