@@ -48,16 +48,26 @@ class TelaHardware(TelaFrame):
 
     def obterDisco(self):
         obterDisco = subprocess.run("sudo fdisk -l | grep 'Disk /dev/sd' | grep -v 'Disklabel'", capture_output=True, text=True, shell=True)
+        separaDisco = obterDisco.stdout.splitlines()
+
         Discos = []
-        for hd in obterDisco.stdout.splitlines():
-            strDisco = hd.split()[4]
+
+        for cadaDisco in separaDisco:
+            nomeDisco = cadaDisco.split()[1].replace("/dev/", "").replace(":", "")
+            tipoDisco = subprocess.run(f"lsblk -d -o NAME,ROTA -e 7 | grep {nomeDisco}", capture_output=True, text=True, shell=True)
+            if tipoDisco.stdout.split()[1] == "0":
+                tipoDisco = "SSD"
+            else:
+                tipoDisco = "HD"
+
+            strDisco = cadaDisco.split()[4]
             strDisco = int(strDisco)
             if strDisco>=1000000000000:
                 strDisco = strDisco / 1000000000000
-                strDisco = f"Disco HD/SSD: {strDisco}TB"
+                strDisco = f"Disco {tipoDisco}: {round(strDisco, 1)} TB"
             else:
                 strDisco = strDisco / 1000000000
-                strDisco = f"Disco HD/SSD: {strDisco}GB"
+                strDisco = f"Disco {tipoDisco}: {round(strDisco, 1)} GB"
             Discos = Discos + [strDisco]
         return(Discos)
 
