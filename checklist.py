@@ -15,6 +15,20 @@ Telas = [
     "Fonte",
     "Resultado Final"
 ]
+
+Resultados = {
+    "WiFi": None,
+    "Bluetooth": None,
+    "Lan": None,
+    "HDMI": None,
+    "VGA": None,
+    "Som": None,
+    "Microfone": None,
+    "Webcam": None,
+    "Teclado": None,
+    "Fonte": None
+}
+
 pagina = 0
 
 
@@ -29,6 +43,15 @@ class TelaFrame(tk.Frame):
         botProximo.pack(side="right")
         botVoltar = tk.Button(rodape, text="Voltar", command=lambda: mudarPagina(-1))
         botVoltar.pack(side="left")
+
+class TelaFrameTeste(TelaFrame):
+    def __init__(self, master, titulotext):
+        super().__init__(master, titulotext)
+        botOk = tk.Button(self, text="Okay")
+        botOk.pack(side="right")
+        botNaoFunciona = tk.Button(self, text="Não Funciona")
+        botNaoFunciona.pack(side="left")
+
 
 
 class TelaHardware(TelaFrame):
@@ -81,7 +104,7 @@ class TelaHardware(TelaFrame):
             mostrarDisco = tk.Label(self, text=disco)
             mostrarDisco.pack()
 
-class TelaWiFi(TelaFrame):
+class TelaWiFi(TelaFrameTeste):
     def obterWiFi(self):
         obterWiFi = subprocess.run("nmcli device wifi list", capture_output=True, text=True, shell=True)
         return(obterWiFi.stdout.splitlines()[:10])
@@ -93,7 +116,7 @@ class TelaWiFi(TelaFrame):
             mostrarWiFi = tk.Label(self, text=wifi)
             mostrarWiFi.pack()
 
-class TelaBluetooth(TelaFrame):
+class TelaBluetooth(TelaFrameTeste):
     def __init__(self, master):
         super().__init__(master, "Bluetooth")
 
