@@ -35,7 +35,7 @@ class TelaFrame(tk.Frame):
 class TelaHardware(TelaFrame):
     def obterCPU(self):
         obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
-        return(obterCPU.stdout)
+        return(obterCPU.stdout.replace("Model name:", "").strip())
 
     def obterRAM(self):
         obterRAM = subprocess.run("sudo dmidecode -t memory | grep -i size", capture_output=True, text=True, shell=True)
