@@ -32,22 +32,27 @@ class TelaFrame(tk.Frame):
 
 class TelaHardware(TelaFrame):
     def obterCPU(self):
-            obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
-            return(obterCPU.stdout)
+        obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
+        return(obterCPU.stdout)
     def obterRAM(self):
-            obterRAM = subprocess.run("sudo dmidecode -t memory | grep -i size", capture_output=True, text=True, shell=True)
-            somaRAM = 0
-            for pente in obterRAM.stdout.splitlines():
-                strRAM = pente.split()[1].replace("GB", "")
-                strRAM = int(strRAM)
-                somaRAM = somaRAM+strRAM
-            return(f"Memoria RAM: {somaRAM}GB")
+        obterRAM = subprocess.run("sudo dmidecode -t memory | grep -i size", capture_output=True, text=True, shell=True)
+        somaRAM = 0
+        for pente in obterRAM.stdout.splitlines():
+            strRAM = pente.split()[1].replace("GB", "")
+            strRAM = int(strRAM)
+            somaRAM = somaRAM+strRAM
+        return(f"Memoria RAM: {somaRAM}GB")
+    def obterDisco(self):
+        obterDisco = subprocess.run("sudo fdisk -l | grep 'Disk /dev/sd' | grep -v 'Disklabel'", capture_output=True, text=True, shell=True)
+        return(obterDisco.stdout)
     def __init__(self, master):
         super().__init__(master, "Hardware")
         mostrarCPU = tk.Label(self, text=self.obterCPU())
         mostrarCPU.pack()
         mostrarRAM = tk.Label(self, text=self.obterRAM())
         mostrarRAM.pack()
+        mostrarDisco = tk.Label(self, text=self.obterDisco())
+        mostrarDisco.pack()
 
 class TelaWiFi(TelaFrame):
     def __init__(self, master):
