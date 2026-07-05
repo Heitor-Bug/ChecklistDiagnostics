@@ -1,3 +1,4 @@
+import platform
 import subprocess
 import tkinter as tk
 
@@ -31,10 +32,13 @@ class TelaFrame(tk.Frame):
         botVoltar.pack(side="left")
 
 class TelaHardware(TelaFrame):
+    def obterCPU(self):
+            obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
+            return(obterCPU.stdout)
     def __init__(self, master):
         super().__init__(master, "Hardware")
-        obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
-        print(obterCPU)
+        print(self.obterCPU())
+
 
 class TelaWiFi(TelaFrame):
     def __init__(self, master):
