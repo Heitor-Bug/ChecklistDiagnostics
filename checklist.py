@@ -1,4 +1,3 @@
-import platform
 import subprocess
 import tkinter as tk
 
@@ -83,8 +82,14 @@ class TelaHardware(TelaFrame):
             mostrarDisco.pack()
 
 class TelaWiFi(TelaFrame):
+    def obterWiFi():
+        obterWiFi = subprocess.run("nmcli device wifi list", capture_output=True, text=True, shell=True)
+        return(obterWiFi)
+    
     def __init__(self, master):
         super().__init__(master, "WiFi")
+        mostrarWiFi = tk.Label(self, text=self.obterWiFi())
+        mostrarWiFi.pack()
 
 class TelaBluetooth(TelaFrame):
     def __init__(self, master):
