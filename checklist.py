@@ -84,7 +84,7 @@ class TelaHardware(TelaFrame):
 class TelaWiFi(TelaFrame):
     def obterWiFi(self):
         obterWiFi = subprocess.run("nmcli device wifi list", capture_output=True, text=True, shell=True)
-        return(obterWiFi.stdout)
+        return(obterWiFi.stdout.splitlines()[:10])
     
     def __init__(self, master):
         super().__init__(master, "WiFi")
