@@ -34,12 +34,15 @@ class TelaHardware(TelaFrame):
     def obterCPU(self):
             obterCPU = subprocess.run("lscpu | grep 'Model name'", capture_output=True, text=True, shell=True)
             return(obterCPU.stdout)
+    def obterRAM(self):
+            obterRAM = subprocess.run("sudo dmidecode-t memory | grep -i size")
+            return(obterRAM.stdout)
     def __init__(self, master):
         super().__init__(master, "Hardware")
         mostrarCPU = tk.Label(self, text=self.obterCPU())
         mostrarCPU.pack()
-        #print(self.obterCPU())
-
+        mostrarRAM = tk.Label(self, text=self.obterRAM())
+        mostrarRAM.pack()
 
 class TelaWiFi(TelaFrame):
     def __init__(self, master):
